@@ -3,9 +3,9 @@
 	"name": "Mindmap Preview",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
+	"description": "Obsidian plugin for viewing note structure in Freeplane",
+	"author": "nanhualyq",
+	"authorUrl": "https://github.com/nanhualyq/obsidian-mindmap-preview",
+	"fundingUrl": "https://github.com/nanhualyq/obsidian-mindmap-preview",
 	"isDesktopOnly": true
 }
