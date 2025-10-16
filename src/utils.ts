@@ -77,6 +77,9 @@ function tokens2stack(tokens: Token[]) {
 					text += `</${iToken.tag}>`;
 				} else if (iToken.type === "text") {
 					text += iToken.content;
+				} else if (iToken.type === "code_inline") {
+					hasHtml = true;
+					text += `<code>${iToken.content}</code>`;
 				}
 			}
 			Object.assign(stack[stack.length - 1], { text, hasHtml });

@@ -212,6 +212,37 @@ describe("makeTree", () => {
 			});
 		});
 	});
+	describe("code inline block", () => {
+		test("inline code", () => {
+			const tree = makeTree("`code`");
+			expect(tree).toMatchObject({
+				text: "<code>code</code>",
+				hasHtml: true,
+			});
+		});
+		// code and text
+		test("code and text", () => {
+			const tree = makeTree("`code` and text");
+			expect(tree).toMatchObject({
+				text: "<code>code</code> and text",
+				hasHtml: true,
+			});
+		});
+		test("text and `code`", () => {
+			const tree = makeTree("text and `code`");
+			expect(tree).toMatchObject({
+				text: "text and <code>code</code>",
+				hasHtml: true,
+			});
+		});
+		test("text, `code`, and text", () => {
+			const tree = makeTree("text, `code`, and text");
+			expect(tree).toMatchObject({
+				text: "text, <code>code</code>, and text",
+				hasHtml: true,
+			});
+		});
+	});
 });
 
 describe("buildXml", () => {
