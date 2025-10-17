@@ -5,9 +5,16 @@ import * as path from "path";
 import { exec } from "child_process";
 import { makeTree, object2xml, ROOT_TAG } from "./utils";
 import { createHash } from "crypto";
+import SettingTab from "./SettingTab";
 
+type Settings = {
+	freeplanePath: string;
+};
 export default class MindmapPlugin extends Plugin {
-	onload() {
+	settings: Settings;
+	async onload() {
+		this.settings = (await this.loadData()) || {};
+		this.addSettingTab(new SettingTab(this.app, this));
 		this.addCommand({
 			id: "view-in-freeplane",
 			name: "Open Freeplane View for current file",
@@ -45,16 +52,19 @@ export default class MindmapPlugin extends Plugin {
 		const platform = process.platform;
 		let openCmd = "";
 
-		if (platform === "darwin") openCmd = `freeplane "${tmpFile}"`; // macOS
+		const freeplanePath = this.settings.freeplanePath || "freeplane";
+
+		if (platform === "darwin")
+			openCmd = `${freeplanePath} "${tmpFile}"`; // macOS
 		else if (platform === "win32")
-			openCmd = `freeplane "" "${tmpFile}"`; // Windows
-		else openCmd = `freeplane "${tmpFile}"`; // Linux
+			openCmd = `${freeplanePath} "" "${tmpFile}"`; // Windows
+		else openCmd = `${freeplanePath} "${tmpFile}"`; // Linux
 
 		// 执行系统命令
 		exec(openCmd, (err) => {
 			if (err) {
 				console.error("打开文件失败:", err);
-				new Notice("打开文件失败，请检查系统命令。");
+				new Notice(err.message, 0);
 			} else {
 				console.log("已打开:", tmpFile);
 			}
