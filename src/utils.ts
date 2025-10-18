@@ -19,7 +19,7 @@ function getTagLevel(node: Node | markdownit.Token) {
 
 export function makeTree(text: string) {
 	const md = new markdownit();
-	const tokens = md.parse(text, {});
+	const tokens = md.parse(preTranslate(text), {});
 	const stack = tokens2stack(tokens);
 	const tree = stack2tree(stack);
 	if (tree.children.length === 1) {
@@ -134,3 +134,7 @@ export function buildXml(root: Node): string {
 	${root.children.map(buildXml).join("")}
 	</node>`.replace(/\n|\s{2,}|\t/g, "");
 }
+function preTranslate(text: string): string {
+	return text.replace(/^---\n[\s\S]*?\n---\n?/, '')
+}
+

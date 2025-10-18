@@ -15,6 +15,14 @@ describe("makeTree", () => {
 			const tree = makeTree("this is a p");
 			expect(tree).toMatchObject({ text: "this is a p" });
 		});
+		test("meta + p", () => {
+			const tree = makeTree(`---
+aliases:
+  - 😲
+---
+- this is a p`);
+			expect(tree).toMatchObject({ text: "this is a p" });
+		});
 	});
 	describe("multiple root", () => {
 		test("two h1", () => {
